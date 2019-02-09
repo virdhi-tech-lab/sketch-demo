@@ -1,4 +1,5 @@
 import React from "react";
+import { TOOL } from "./constants";
 
 export default class Sketch extends React.Component {
   constructor(props) {
@@ -8,52 +9,32 @@ export default class Sketch extends React.Component {
     this.ctx = {};
     this.canvas = {};
     this.toolEnable = false;
-    this.state = {
-      toolEnable: false
-    };
   }
   static defaultProps = {
-    width: window.innerWidth * 0.75,
-    height: ((window.innerWidth * 0.75) / 4) * 5
+    width: window.innerWidth * 0.9,
+    height: window.innerHeight
   };
   componentDidMount() {
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
-    // let { annotation } = this.props;
-    // let pencilTools = _.filter(annotation.toolInfo.Tools, tool => {
-    //   return tool.toolType == appConstants.TOOL.pencil;
-    // });
-    // pencilTools.forEach(tool => {
-    //   for (let i = 0; i < tool.Xpos.length - 1; i++) {
-    //     this.renderLine(
-    //       tool.Xpos[i],
-    //       tool.Ypos[i],
-    //       tool.Xpos[i + 1],
-    //       tool.Ypos[i + 1],
-    //       tool.color
-    //     );
-    //   }
-    // });
+    const { toolInfo } = this.props;
+    const pencilTools = toolInfo.Tools.filter(
+      tool => tool.toolType === TOOL.PENCIL
+    );
+
+    pencilTools.forEach(tool => {
+      for (let i = 0; i < tool.Xpos.length - 1; i++) {
+        this.renderLine(
+          tool.Xpos[i],
+          tool.Ypos[i],
+          tool.Xpos[i + 1],
+          tool.Ypos[i + 1],
+          tool.color
+        );
+      }
+    });
   }
 
-  componentDidUpdate() {
-    // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    // let { annotation } = this.props;
-    // let pencilTools = _.filter(annotation.toolInfo.Tools, tool => {
-    //   return tool.toolType == appConstants.TOOL.pencil;
-    // });
-    // pencilTools.forEach(tool => {
-    //   for (let i = 0; i < tool.Xpos.length - 1; i++) {
-    //     this.renderLine(
-    //       tool.Xpos[i],
-    //       tool.Ypos[i],
-    //       tool.Xpos[i + 1],
-    //       tool.Ypos[i + 1],
-    //       tool.color
-    //     );
-    //   }
-    // });
-  }
   componentWillUnmount() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
@@ -105,7 +86,7 @@ export default class Sketch extends React.Component {
     this.down.x = e.clientX - canvas.getBoundingClientRect().left;
     this.down.y = e.clientY - canvas.getBoundingClientRect().top;
 
-    if (tool == "pencil") {
+    if (tool === TOOL.PENCIL) {
       this.ctx = canvas.getContext("2d");
       this.ctx.fillStyle = color;
       tempTool.toolType = tool;

@@ -1,20 +1,34 @@
 import React, { Component } from "react";
 import styles from "../style/App.module.scss";
 import Sketch from "./Sketch";
+import { TOOL } from "./constants";
 
 class App extends Component {
-  updateToolInfo = data => {
-    console.log(data);
+  state = {
+    toolInfo: {
+      Tools: []
+    },
+    tool: TOOL.PENCIL,
+    color: "#234494"
   };
+
+  updateToolInfo = data => {
+    this.setState({ toolInfo: data });
+  };
+
   render() {
+    const { color, toolInfo, tool } = this.state;
     return (
       <div className={styles.container}>
-        <Sketch
-          tool="pencil"
-          color="#344"
-          toolInfo={{ Tools: [] }}
-          updateToolInfo={this.updateToolInfo}
-        />
+        <div className={styles.toolsPanel}>tools is under construction</div>
+        <div className={styles.sketch}>
+          <Sketch
+            tool={tool}
+            color={color}
+            toolInfo={toolInfo}
+            updateToolInfo={this.updateToolInfo}
+          />
+        </div>
       </div>
     );
   }
