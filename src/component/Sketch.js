@@ -17,18 +17,16 @@ export default class Sketch extends React.Component {
   componentDidMount() {
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
-    const { toolInfo } = this.props;
-    const pencilTools = toolInfo.Tools.filter(
-      tool => tool.toolType === TOOL.PENCIL
-    );
+    const { drawInput } = this.props;
+    const pencilTools = drawInput.filter(tool => tool.toolType === TOOL.PENCIL);
 
     pencilTools.forEach(tool => {
-      for (let i = 0; i < tool.Xpos.length - 1; i++) {
+      for (let i = 0; i < tool.x.length - 1; i++) {
         this.renderLine(
-          tool.Xpos[i],
-          tool.Ypos[i],
-          tool.Xpos[i + 1],
-          tool.Ypos[i + 1],
+          tool.x[i],
+          tool.y[i],
+          tool.x[i + 1],
+          tool.y[i + 1],
           tool.color
         );
       }
@@ -67,17 +65,17 @@ export default class Sketch extends React.Component {
       context.stroke();
       this.down.x = e.clientX - canvas.getBoundingClientRect().left;
       this.down.y = e.clientY - canvas.getBoundingClientRect().top;
-      this.pencil.Xpos.push(e.clientX - canvas.getBoundingClientRect().left);
-      this.pencil.Ypos.push(e.clientY - canvas.getBoundingClientRect().top);
+      this.pencil.x.push(e.clientX - canvas.getBoundingClientRect().left);
+      this.pencil.y.push(e.clientY - canvas.getBoundingClientRect().top);
     }
   }
 
   onMouseDown(e) {
-    const { toolInfo, updateToolInfo, color, tool } = this.props;
+    const { drawInput, updateToolInfo, color, tool } = this.props;
     const tempTool = {
       toolType: "",
-      Xpos: [],
-      Ypos: [],
+      x: [],
+      y: [],
       textContent: "",
       color: ""
     };
@@ -90,21 +88,18 @@ export default class Sketch extends React.Component {
       this.ctx = canvas.getContext("2d");
       this.ctx.fillStyle = color;
       tempTool.toolType = tool;
-      tempTool.Xpos.push(this.down.x);
-      tempTool.Ypos.push(this.down.y);
+      tempTool.x.push(this.down.x);
+      tempTool.y.push(this.down.y);
       tempTool.color = color;
       this.pencil = tempTool;
     }
-    updateToolInfo({ ...toolInfo, Tools: toolInfo.Tools.concat(tempTool) });
+    updateToolInfo([...drawInput, tempTool]);
   }
   updateToolInfo = e => {
     e.preventDefault();
-    const { toolInfo, updateToolInfo } = this.props;
+    const { drawInput, updateToolInfo } = this.props;
     if (this.toolEnable) {
-      updateToolInfo({
-        ...toolInfo,
-        Tools: toolInfo.Tools.concat(this.pencil)
-      });
+      updateToolInfo([...drawInput, this.pencil]);
     }
     this.pencil = {};
     this.toolEnable = false;

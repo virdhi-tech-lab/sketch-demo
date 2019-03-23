@@ -5,27 +5,35 @@ import { TOOL } from "./constants";
 
 class App extends Component {
   state = {
-    toolInfo: {
-      Tools: []
-    },
+    drawInput: [],
     tool: TOOL.PENCIL,
     color: "#234494"
   };
 
   updateToolInfo = data => {
-    this.setState({ toolInfo: data });
+    this.setState({ drawInput: data });
   };
 
   render() {
-    const { color, toolInfo, tool } = this.state;
+    const { color, tool, drawInput } = this.state;
     return (
       <div className={styles.container}>
-        <div className={styles.toolsPanel}>tools is under construction</div>
+        <div className={styles.toolsPanel}>
+          <div className="mx-auto">Color</div>
+          <input
+            type="color"
+            className="mx-auto color-picker"
+            name="colorPicker"
+            title="Color Picker"
+            value={color}
+            onChange={e => this.setState({ color: e.target.value })}
+          />
+        </div>
         <div className={styles.sketch}>
           <Sketch
             tool={tool}
             color={color}
-            toolInfo={toolInfo}
+            drawInput={drawInput}
             updateToolInfo={this.updateToolInfo}
           />
         </div>
