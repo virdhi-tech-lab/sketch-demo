@@ -38,8 +38,12 @@ class App extends Component {
             </div>
 
             <div className='mt1 col-12 align-center'>
-              <div>Pencil</div>
-              <button onClick={() => this.sketch.unDo()}>Undo</button>
+              <div>UN DO</div>
+              <button onClick={() => this.sketch.unDo()}>{`<-`}</button>
+            </div>
+            <div className='mt1 col-12 align-center'>
+              <div>RE DO</div>
+              <button onClick={() => this.sketch.reDo()}>{`->`}</button>
             </div>
           </div>
         </div>

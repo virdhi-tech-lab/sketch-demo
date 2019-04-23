@@ -28,16 +28,6 @@ export default class Sketch extends React.Component {
     height: PropTypes.number
   };
 
-  unDo = () => {
-    const { drawInput, updateToolInfo } = this.props;
-    if (drawInput.length > 0) {
-      const data =
-        drawInput.lenght === 1 ? [] : drawInput.slice(0, drawInput.length - 2);
-      this.tempInput.push(drawInput[drawInput.length - 1]);
-      updateToolInfo(data);
-    }
-  };
-
   //initial rendering in the lines in UI
   componentDidMount() {
     this.canvas = document.getElementById("canvas");
@@ -57,10 +47,13 @@ export default class Sketch extends React.Component {
       }
     });
   }
+
   //clear canvas context
   componentWillUnmount() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
+
+  //every update of the component will be clear canvas and redraw it
   componentDidUpdate() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     const { drawInput } = this.props;
@@ -77,6 +70,24 @@ export default class Sketch extends React.Component {
       }
     });
   }
+
+  unDo = () => {
+    const { drawInput, updateToolInfo } = this.props;
+    if (drawInput.length > 0) {
+      this.tempInput.push(drawInput[drawInput.length - 1]);
+      const data =
+        drawInput.lenght === 1 ? [] : drawInput.slice(0, drawInput.length - 2);
+      updateToolInfo(data);
+    }
+  };
+
+  reDo = () => {
+    const { drawInput, updateToolInfo } = this.props;
+    if (this.tempInput.length > 0) {
+      const data = this.tempInput.pop();
+      updateToolInfo([...drawInput, data]);
+    }
+  };
 
   renderLine(x1, y1, x2, y2, color) {
     this.ctx.strokeStyle = color;
