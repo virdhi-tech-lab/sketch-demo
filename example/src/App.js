@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import styles from "../style/App.module.scss";
-import Sketch from "./Sketch";
-import { TOOL } from "./constants";
+import styles from "./style/App.module.scss";
+import Sketch, { TOOL } from "canvas-sketch";
 
 class App extends Component {
   state = {

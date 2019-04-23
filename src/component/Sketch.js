@@ -71,7 +71,7 @@ export default class Sketch extends React.Component {
     });
   }
 
-  unDo = () => {
+  unDo() {
     const { drawInput, updateToolInfo } = this.props;
     if (drawInput.length > 0) {
       this.tempInput.push(drawInput[drawInput.length - 1]);
@@ -79,18 +79,18 @@ export default class Sketch extends React.Component {
         drawInput.lenght === 1 ? [] : drawInput.slice(0, drawInput.length - 2);
       updateToolInfo(data);
     }
-  };
+  }
 
-  reDo = () => {
+  reDo() {
     const { drawInput, updateToolInfo } = this.props;
     if (this.tempInput.length > 0) {
       const data = this.tempInput.pop();
       updateToolInfo([...drawInput, data]);
     }
-  };
+  }
   eraseAll = () => {
     const { drawInput, updateToolInfo } = this.props;
-    this.tempInput = this.tempInput.concat(drawInput);
+    this.tempInput.concat(drawInput);
     updateToolInfo([]);
   };
 
@@ -155,7 +155,7 @@ export default class Sketch extends React.Component {
     updateToolInfo([...drawInput, tempTool]);
   }
 
-  updateToolInfo = e => {
+  updateToolInfo(e) {
     e.preventDefault();
     const { drawInput, updateToolInfo } = this.props;
     if (this.toolEnable) {
@@ -163,7 +163,7 @@ export default class Sketch extends React.Component {
     }
     this.pencil = {};
     this.toolEnable = false;
-  };
+  }
 
   render() {
     const { width, height } = this.props;
