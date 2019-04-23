@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { TOOL } from "./constants";
 
 export default class Sketch extends React.Component {
@@ -9,11 +10,35 @@ export default class Sketch extends React.Component {
     this.ctx = {};
     this.canvas = {};
     this.toolEnable = false;
+    this.tempInput = [];
   }
+
   static defaultProps = {
     width: window.innerWidth * 0.9,
-    height: window.innerHeight
+    height: window.innerHeight,
+    updateToolInfo: () => {}
   };
+
+  static propTypes = {
+    drawInput: PropTypes.array,
+    updateToolInfo: PropTypes.func,
+    color: PropTypes.string,
+    tool: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number
+  };
+
+  unDo = () => {
+    const { drawInput, updateToolInfo } = this.props;
+    if (drawInput.length > 0) {
+      const data =
+        drawInput.lenght === 1 ? [] : drawInput.slice(0, drawInput.length - 2);
+      this.tempInput.push(drawInput[drawInput.length - 1]);
+      updateToolInfo(data);
+    }
+  };
+
+  //initial rendering in the lines in UI
   componentDidMount() {
     this.canvas = document.getElementById("canvas");
     this.ctx = this.canvas.getContext("2d");
@@ -32,10 +57,27 @@ export default class Sketch extends React.Component {
       }
     });
   }
-
+  //clear canvas context
   componentWillUnmount() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
+  componentDidUpdate() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    const { drawInput } = this.props;
+    const pencilTools = drawInput.filter(tool => tool.toolType === TOOL.PENCIL);
+    pencilTools.forEach(tool => {
+      for (let i = 0; i < tool.x.length - 1; i++) {
+        this.renderLine(
+          tool.x[i],
+          tool.y[i],
+          tool.x[i + 1],
+          tool.y[i + 1],
+          tool.color
+        );
+      }
+    });
+  }
+
   renderLine(x1, y1, x2, y2, color) {
     this.ctx.strokeStyle = color;
     this.ctx.globalCompositeOperation = "source-over";
@@ -47,6 +89,7 @@ export default class Sketch extends React.Component {
     this.ctx.lineJoin = "round";
     this.ctx.stroke();
   }
+
   onMouseMove(e) {
     let canvas = document.getElementById("canvas");
     if (this.toolEnable) {
@@ -95,6 +138,7 @@ export default class Sketch extends React.Component {
     }
     updateToolInfo([...drawInput, tempTool]);
   }
+
   updateToolInfo = e => {
     e.preventDefault();
     const { drawInput, updateToolInfo } = this.props;
@@ -109,7 +153,7 @@ export default class Sketch extends React.Component {
     const { width, height } = this.props;
     return (
       <canvas
-        id="canvas"
+        id='canvas'
         width={width}
         height={height}
         ref={el => (this.canvas = el)}
