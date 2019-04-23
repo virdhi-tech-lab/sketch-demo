@@ -34,7 +34,7 @@ class App extends Component {
 
             <div className='mt1 col-12 align-center'>
               <div>Clear</div>
-              <button>Erase</button>
+              <button onClick={() => this.sketch.eraseAll()}>Erase</button>
             </div>
 
             <div className='mt1 col-12 align-center'>

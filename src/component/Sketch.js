@@ -88,6 +88,11 @@ export default class Sketch extends React.Component {
       updateToolInfo([...drawInput, data]);
     }
   };
+  eraseAll = () => {
+    const { drawInput, updateToolInfo } = this.props;
+    this.tempInput = this.tempInput.concat(drawInput);
+    updateToolInfo([]);
+  };
 
   renderLine(x1, y1, x2, y2, color) {
     this.ctx.strokeStyle = color;
