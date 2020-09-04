@@ -3203,8 +3203,43 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000844, caniuse-lite@^1.0.30000918, can
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000962.tgz#6c10c3ab304b89bea905e66adf98c0905088ee44"
 
 "canvas-sketch@link:..":
-  version "0.0.0"
-  uid ""
+  version "0.1.0"
+  dependencies:
+    "@svgr/rollup" "^2.4.1"
+    babel-core "^6.26.3"
+    babel-eslint "^8.2.5"
+    babel-plugin-external-helpers "^6.22.0"
+    babel-preset-env "^1.7.0"
+    babel-preset-react "^6.24.1"
+    babel-preset-stage-0 "^6.24.1"
+    cross-env "^5.1.4"
+    enzyme "^3.8.0"
+    enzyme-adapter-react-16 "^1.7.1"
+    enzyme-to-json "^3.3.5"
+    eslint "^5.0.1"
+    eslint-config-import "^0.13.0"
+    eslint-config-react-app "^3.0.5"
+    eslint-plugin-flowtype "^3.2.0"
+    eslint-plugin-import "^2.14.0"
+    eslint-plugin-jsx-a11y "^6.1.2"
+    eslint-plugin-prettier "^3.0.0"
+    eslint-plugin-react "^7.11.1"
+    node-sass "^4.11.0"
+    prettier "1.15.3"
+    react "^16.4.1"
+    react-dom "^16.4.1"
+    react-scripts "^2.0.3"
+    rollup "^0.64.1"
+    rollup-plugin-babel "^3.0.7"
+    rollup-plugin-commonjs "^9.1.3"
+    rollup-plugin-node-resolve "^3.3.0"
+    rollup-plugin-peer-deps-external "^2.2.0"
+    rollup-plugin-postcss "^1.6.2"
+    rollup-plugin-url "^1.4.0"
+    stylelint "^9.6.0"
+    stylelint-config-prettier "^4.0.0"
+    stylelint-config-recommended "^2.1.0"
+    stylelint-scss "^3.3.1"
 
 capture-exit@^1.2.0:
   version "1.2.0"
@@ -7770,8 +7805,8 @@ lodash.memoize@^4.1.2:
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
 
 lodash.mergewith@^4.6.0:
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.1.tgz#639057e726c3afbdb3e7d42741caa8d6e4335927"
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.2.tgz#617121f89ac55f59047c7aec1ccd6654c6590f55"
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
